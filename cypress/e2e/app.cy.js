@@ -1,9 +1,9 @@
 describe('Sign Up', () => {
   Cypress._.times(10, (k) => {
-    it('Adds person to course ' + (k + 1) + ' / 10', () => {
+    it(`Adds person to course ${k + 1} / 10`, () => {
       cy.visit('/')
 
-      cy.contains('button', 'Submit').then(($submit) => {
+      cy.contains('button', 'Submit').as('submitButton')
         // type user name into input
         cy.get('input[name="name"]').click().type('Some Name')
         // type user email
@@ -13,8 +13,8 @@ describe('Sign Up', () => {
         // select the "git-it" course
         cy.get('select[name="course"]').select('git-it')
         // submit the form
-        cy.wrap($submit).click()
-      })
+        cy.get('@submitButton').click()
+      
       // the "Saved!" message should appear
       cy.get('input[value="Saved!"]').should('be.visible')
       // and the list of registered people should contain the new person
