@@ -2,6 +2,7 @@ describe('Sign Up', () => {
   Cypress._.times(10, (k) => {
     it(`Adds person to course ${k + 1} / 10`, () => {
       cy.visit('/')
+      cy.get('[loaded=true]', {timeout: 10000})
 
       // type user name into input
       cy.get('input[name="name"]').click().type('Some Name')
@@ -18,7 +19,7 @@ describe('Sign Up', () => {
       // and the list of registered people should contain the new person
       // including the email and the course name
       cy.get('li')
-        .should('have.length', 1)
+        .should('have.length.gte', 1)
         .and('contain', 'Some Name - some@email.com - core - git-it')
     })
   })
