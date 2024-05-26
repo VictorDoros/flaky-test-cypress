@@ -13,6 +13,13 @@ describe('Sign Up', () => {
       cy.get('input[name="name"]').click().type('Some Name')
       // type user email
       cy.get('input[name="email"]').click().type('some@email.com')
+        .invoke("attr", "value")
+        .then(value => {
+          if(value !== 'some@email.com'){
+            cy.get('input[name="email"]').clear().type('some@email.com')
+          }
+        })
+      cy.get('input[name="email"]').should('have.value', 'some@email.com')
       // select the "core" department
       cy.get('select[name="department"]').select('core')
       // select the "git-it" course
